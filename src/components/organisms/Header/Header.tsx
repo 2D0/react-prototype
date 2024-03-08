@@ -27,18 +27,12 @@ import {
 
 //컴포넌트
 import { ButtonDefault, TextTitle } from 'src/components/atoms';
-import { useOrgByOrgId } from 'src/queries/org/useOrgByOrgId';
-import { useAuth } from 'src/contexts/AuthContext';
 
 export function Header() {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const { showSideBar } = useModal();
   const { title, leftText, leftButton, rightButton } =
     useRecoilValue(headerState);
-  const { data } = useOrgByOrgId({
-    orgId: user?.user_metadata?.orgId || '',
-  });
 
   return (
     <HeaderWrap>
@@ -61,8 +55,8 @@ export function Header() {
             <TextTitle textTitleData={{ text: leftText }} />
           </HeaderLeft>
         )}
-        {title || data?.orgName ? (
-          <TextTitle textTitleData={{ text: title || data?.orgName }} />
+        {title ? (
+          <TextTitle textTitleData={{ text: title }} />
         ) : (
           <HeaderCenter>
             <SvgLogo onClick={() => navigate('/')} />
